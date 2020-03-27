@@ -2,7 +2,6 @@ name: Travis integrator RSVP
 language: node_js
 node_js:
   - 10
-  - 12
 on:
   push:
     branches:
@@ -12,7 +11,7 @@ on:
 
 # command to install dependencies
 install:
-  - npm install
+  - npm ci
 
 # command to run tests
 script:
