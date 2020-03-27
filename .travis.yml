@@ -9,7 +9,7 @@ on:
 
 # command to install dependencies
 install:
-  - npm ci
+  - npm install
 
 # command to run tests
 script:
