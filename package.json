@@ -10,15 +10,18 @@
     "@material/card": "^5.1.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
+    "crypto-js": "^4.0.0",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-handlebars": "^4.0.3",
     "express-hbs": "^2.3.3",
-    "hbs": "~4.0.4",
-    "http-errors": "~1.6.3",
+    "hbs": "^4.1.1",
+    "http-errors": "^1.6.3",
     "install": "^0.13.0",
     "mocha": "^7.1.1",
+    "mongodb": "^3.5.5",
     "morgan": "~1.9.1",
-    "npm": "^6.14.4"
+    "npm": "^6.14.4",
+    "nodemailer": "^6.4.6"
   }
 }

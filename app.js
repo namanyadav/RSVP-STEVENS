@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const exphbs = require("express-handlebars");
 const hbs = require('hbs');
 
+const configRoutes = require('./routes');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const eventsRouter = require('./routes/events');
@@ -39,9 +40,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/events', eventsRouter);
+configRoutes(app);
 
 // app.use('*', function (req, res, next) {
 //   res.header('Access-Control-Allow-Origin', '*');
