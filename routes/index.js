@@ -1,8 +1,10 @@
 const users = require('./users');
+const events = require('./events');
 const path = require('path');
 
 const constructorMethod = (app) => {
 	app.use('/users', users);
+	app.use('/events', events);
 	app.get('/changePassword', (req, res) => {
 		res.render('changePassword', 
 		{

@@ -29,7 +29,7 @@ hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 // })
 app.engine("handlebars", exphbs(hbs));
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());

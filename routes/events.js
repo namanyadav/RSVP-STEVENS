@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* new event page */
 router.get('/new', function(req, res, next) {
-  res.render('multipart_form', {user: 'naman'})
+  res.render('multipart_form', {user: 'naman', layout: 'layouts/main'})
   // res.send('all events in system');
 });
 
