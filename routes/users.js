@@ -8,8 +8,9 @@ router.get('/', function(req, res, next) {
 });
 
 /* get user with id */
-router.get('/:id', function(req, res, next) {
-  res.send(`user with id [${req.params.id}]`);
+router.get('/:id', async function(req, res, next) {
+  const user = await userData.getUser(req.params.id)
+  res.json(user)
 });
 
 /* create user */
@@ -21,6 +22,7 @@ router.post('/create', async function(req, res, next) {
   // let lname = req.body.lname;
   // let dob = req.body.dob;
   // let gender = req.body.gender;
+  console.log(`requs data: ${req.body.email}`)
   let userJson = {
     email: req.body.email,
     password: req.body.password,

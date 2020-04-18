@@ -1,0 +1,187 @@
+<main class="ui text container">
+    <div class="ui grid">
+        <div class="ui sixteen column wide">
+            <div class="ui attached segment hidden">
+                <p></p>
+            </div>
+            {{>steps}}
+        </div>
+    </div>
+    <div class="ui grid equal width padded">
+
+        <form id="new_event_form" method="post" action="javascript:alert( 'success!' );" data-actiond="" class="ui form sixteen wide column" style="border: 0px dotted black" onsubmit1="create_new_event(this, event); return false;">
+            <div class="tab">
+                <!--                    <img src="https://semantic-ui.com/images/avatar/large/nan.jpg" class="ui small image">-->
+                <div class="field sixteen wide column required">
+                    <label class="sixteen wide column">Category</label>
+                    <div class="ui equal width padded1 grid padding0 buttongrp">
+                        <input type="text" name="category" class="hidden">
+                        <div class="column center aligned">
+                            <div class="row">
+                                <button data-category="music" class="sixteen wide column circular ui icon button massive toggle" type="button">
+                                    <i class="icon music"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <span>Music</span>
+                            </div>
+                        </div>
+
+                        <div class="column center aligned">
+                            <div class="row">
+                                <button data-category="foodndrink" class="sixteen wide column circular ui icon button massive toggle" type="button">
+                                    <i class="icon food"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <span>Food & Drink</span>
+                            </div>
+                        </div>
+
+                        <div class="column center aligned">
+                            <div class="row">
+                                <button data-category="artsnculture" class="sixteen wide column circular ui icon button massive toggle" type="button">
+                                    <i class="icon paint brush"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                Arts & Culture
+                            </div>
+                        </div>
+
+                        <div class="column center aligned">
+                            <div class="row">
+                                <button data-category="partiesnnightlife" class="sixteen wide column circular ui icon button massive toggle" type="button">
+                                    <i class="icon cocktail"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                Parties & Nightlife
+                            </div>
+                        </div>
+
+
+                        <div class="column center aligned">
+                            <div class="row">
+                                <button data-category="sportsnwellness" class="sixteen wide column circular ui icon button massive toggle" type="button">
+                                    <i class="icon football ball"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                Sports & Wellness
+                            </div>
+                        </div>
+
+                        <div class="column center aligned">
+                            <div class="row">
+                                <button data-category="networking" class="sixteen wide column circular ui icon button massive toggle" type="button">
+                                    <i class="icon sitemap"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                Networking
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="field sixteen wide column required">
+                    <label class="sixteen wide column">Event Date</label>
+                    <!--                <input type="date" name="event_date" placeholder="Event Date">-->
+                    <div class="fields">
+                        <div class="eight wide field">
+                            <div class="ui calendar">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" placeholder="Start Date/Time" name="sDate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
+                            <div class="ui calendar">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" placeholder="End Date/Time" name="eDate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field sixteen wide column required">
+                    <label class="sixteen wide column">Title</label>
+                    <input class="sixteen wide column" type="text" name="title" placeholder="Title">
+                </div>
+
+            </div>
+
+            <div class="tab">
+                <div class="field required">
+                    <label>Capacity</label>
+                    <input type="text" name="capacity" placeholder="Capacity">
+                </div>
+                {{>address}}
+                <!--<div class="field required">
+                    <label>Venue</label>
+                    <input type="text" name="venue" placeholder="Venue">
+                </div>-->
+            </div>
+
+            <div class="tab">
+                <div class="two fields">
+                    <div class="inline field required six wide column">
+                        <label>Pricing</label>
+                        <input type="text" class="" style="display: none" name="pricing">
+                        <!--<div class="ui toggle checkbox">
+                            <input type="checkbox" tabindex="0" class="hidden">
+                        </div>-->
+                        <div class="ui buttons">
+                            <button class="ui button" onclick="togglePricing(this, 'free')" type="button">Free</button>
+                            <div class="or"></div>
+                            <button class="ui button" onclick="togglePricing(this, 'paid')" type="button">Paid</button>
+                        </div>
+                    </div>
+                    <div class="inline field required event_cost ten wide column" style="display: none">
+                        <label>Cost ($)</label>
+                        <input type="text" name="cost" placeholder="Cost">
+                        <!--<div class="ui right labeled input">
+                            <label for="amount" class="ui label">$</label>
+                            <input type="text" placeholder="Amount" id="amount">
+                            <div class="ui basic label">.00</div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="field required">
+                    <label>Picture</label>
+                    <input type="file" name="eventsPics" onchange="loadFile(event)">
+                    <img id="output" width="200" />
+                </div>
+                <div class="field sixteen wide column">
+                    <label class="sixteen wide column">Additional Info</label>
+                    <!--            <input type="text" name="desc" placeholder="Description">-->
+                    <textarea rows="2" name="desc" class="sixteen wide column"></textarea>
+                </div>
+            </div>
+
+            <br>
+
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button class="ui button basic primary" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button class="ui button basic primary" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                </div>
+            </div>
+            <button class="ui button basic primary hidden" style="display: none" type="submit" id="submit" onclick="">Submit</button>
+<!--            <button class="ui button basic primary" type="button" id="test_btn" onclick="test_fun()">Validate</button>-->
+            <div class="ui error message"></div>
+
+            <!-- Circles which indicates the steps of the form: -->
+            <div style="text-align:center;margin-top:40px;">
+                <span class="w3-step"></span>
+                <span class="w3-step"></span>
+                <span class="w3-step"></span>
+            </div>
+
+        </form>
+    </div>
+</main>

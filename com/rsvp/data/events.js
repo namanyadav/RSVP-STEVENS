@@ -31,12 +31,15 @@ async function createEvent(eventJson){
         organizer: eventJson.organizer,
         title: eventJson.title,
         desc: eventJson.desc,
-        eventDate: eventJson.eventDate,
+        sDate: eventJson.sDate,
+        eDate: eventJson.eDate,
         category: eventJson.category,
         capacity: eventJson.capacity,
-        isPaid: eventJson.isPaid,
-        cost: eventJson.cost,
-        address: eventJson.address
+        isPaid: eventJson.pricing == 'paid',
+        cost: eventJson.pricing == 'paid' ? eventJson.cost : 0,
+        stAddr: eventJson.stAddr,
+        state: eventJson.state,
+        country: eventJson.country
     };
 
     const InsertInfo = await eventCollections.insertOne(event);

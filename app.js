@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser')
 const exphbs = require("express-handlebars");
+const hbs = require('hbs');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -13,13 +14,18 @@ const eventsRouter = require('./routes/events');
 const app = express();
 
 // view engine setup
-let hbs = exphbs.create({
-  // defaultLayout: "main",
-  helpers: {
-    ifEquals: function(arg1, arg2, options) { if (arg1 == arg2) {return options.fn(this)} return options.inverse(this); },
-    ifNotEquals: function(arg1, arg2, options) { if (arg1 != arg2) {return options.fn(this)} return options.inverse(this); }
-  }
-})
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) { if (arg1 == arg2) {return options.fn(this)} return options.inverse(this); });
+hbs.registerHelper('ifNotEquals', function(arg1, arg2, options) { if (arg1 != arg2) {return options.fn(this)} return options.inverse(this); });
+hbs.registerPartials(__dirname + '/views/partials', function (err) {});
+// hbs.registerPartial('partial_name', 'partial value');
+
+// let hbs = exphbs.create({
+//   defaultLayout: "main",
+//   helpers: {
+//     ifEquals: function(arg1, arg2, options) { if (arg1 == arg2) {return options.fn(this)} return options.inverse(this); },
+//     ifNotEquals: function(arg1, arg2, options) { if (arg1 != arg2) {return options.fn(this)} return options.inverse(this); }
+//   }
+// })
 app.engine("handlebars", exphbs(hbs));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
@@ -52,6 +58,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+  console.log(err.stack)
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

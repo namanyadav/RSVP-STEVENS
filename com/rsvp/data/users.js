@@ -5,7 +5,7 @@ const ObjectID = require('mongodb').ObjectID;
 // const bcrypt = require("bcrypt");
 const saltRounds = 5;
 
-async function getbyid(id){
+async function getUser(id){
     if(id === undefined){
         throw 'input is empty';
     }
@@ -44,7 +44,7 @@ async function addUser(userJson){
     const InsertInfo = await userCollections.insertOne(newUser);
     if(InsertInfo.insertedCount === 0) throw 'Insert fail!';
 
-    return await this.getbyid(InsertInfo.insertedId);
+    return await this.getUser(InsertInfo.insertedId);
 }
 
 async function getUserByUsername(username){
@@ -82,7 +82,7 @@ async function remove(id) {
     }
 
     const patientCollections = await patient();
-    const target = await this.getbyid(id);
+    const target = await this.getUser(id);
 
     const delinfo = await patientCollections.removeOne({ _id: id });
     if(delinfo.deletedCount === 0) throw 'Can not delete id: ' + id;
@@ -107,7 +107,7 @@ async function update() {
     }
 
     const patientCollections = await users();
-    const target = await this.getbyid(id);
+    const target = await this.getUser(id);
     let changePWD = true;
 
     if(data.email == "" || data.email === undefined){
@@ -148,11 +148,11 @@ async function update() {
     }
 
     const updateinfo = await patientCollections.updateOne({ _id: id } , updatedata);
-    return await this.getbyid(id);
+    return await this.getUser(id);
 }
 
 module.exports = {
-    getbyid,
+    getUser,
     getAll,
     getUserByUsername,
     addUser
