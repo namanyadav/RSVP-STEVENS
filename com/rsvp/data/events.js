@@ -1,11 +1,16 @@
 const mongoCollections = require("./mongoCollections");
 const connection = require("./mongoConnection");
-const users = mongoCollections.users;
+const events = mongoCollections.events;
 const ObjectID = require('mongodb').ObjectID;
 // const bcrypt = require("bcrypt");
 const saltRounds = 5;
-
-async function getUser(id){
+const cats = {
+    music: 'music',
+    foodndrinks: 'foodndrinks',
+    artsnculture: 'artsnculture',
+    sportsnwellness: 'sportsnwellness'
+}
+async function getEvent(id){
     if(id === undefined){
         throw 'input is empty';
     }
@@ -18,33 +23,58 @@ async function getUser(id){
         }
     }
 
-    const userCollections = await users();
-    const target = await userCollections.findOne({ _id: id });
+    const eventCollections = await events();
+    const target = await eventCollections.findOne({ _id: id });
     if(target === null) return undefined;
 
     return target;
 }
 
-async function addUser(userJson){
-    const userCollections = await users();
-    // const hashpassword = await bcrypt.hash(userJson.password, saltRounds);
-    let newUser = {
-        email: userJson.email,
-        gender: userJson.gender,
-        dob: userJson.dob,
-        fname: userJson.fname,
-        lname: userJson.lname,
-        // password: hashpassword
+async function createEvent(eventJson){
+    const eventCollections = await events();
+    let event = {
+        organizer: eventJson.organizer,
+        title: eventJson.title,
+        desc: eventJson.desc,
+        sDate: eventJson.sDate,
+        eDate: eventJson.eDate,
+        category: eventJson.category,
+        capacity: eventJson.capacity,
+        isPaid: eventJson.pricing == 'paid',
+        cost: eventJson.pricing == 'paid' ? eventJson.cost : 0,
+        stAddr: eventJson.stAddr,
+        state: eventJson.state,
+        country: eventJson.country
     };
 
-    let email = userJson.email
-    // const check = await userCollections.findOne({ email: email });
-    // if(check != undefined ) throw 'email already exists.';
+    const InsertInfo = await eventCollections.insertOne(event);
+    if(InsertInfo.insertedCount === 0) throw 'Insert event failed!';
 
-    const InsertInfo = await userCollections.insertOne(newUser);
-    if(InsertInfo.insertedCount === 0) throw 'Insert fail!';
+    return await this.getEvent(InsertInfo.insertedId);
+}
 
-    return await this.getUser(InsertInfo.insertedId);
+async function getEventsOfCategory(category) {
+    let eventList = await getAll();
+    let resultList = [];
+    for(let i=0; i<eventList.length; i++) {
+        let event = eventList[i];
+        if(event.category == category) {
+            resultList.push(event);
+        }
+    }
+    return resultList;
+}
+
+async function getEventsOfCategories(categoryList) {
+    let eventList = await getAll();
+    let resultList = [];
+    for(let i=0; i<eventList.length; i++) {
+        let event = eventList[i];
+        if(categoryList.includes(event.category)) {
+            resultList.push(event);
+        }
+    }
+    return resultList;
 }
 
 async function getUserByUsername(username){
@@ -60,7 +90,7 @@ async function getUserByUsername(username){
 }
 
 async function getAll(){
-    const patientCollections = await patient();
+    const patientCollections = await events();
     const targets = await patientCollections.find({}).toArray();
     return targets;
 }
@@ -82,7 +112,7 @@ async function remove(id) {
     }
 
     const patientCollections = await patient();
-    const target = await this.getUser(id);
+    const target = await this.getEvent(id);
 
     const delinfo = await patientCollections.removeOne({ _id: id });
     if(delinfo.deletedCount === 0) throw 'Can not delete id: ' + id;
@@ -107,7 +137,7 @@ async function update() {
     }
 
     const patientCollections = await users();
-    const target = await this.getUser(id);
+    const target = await this.getEvent(id);
     let changePWD = true;
 
     if(data.email == "" || data.email === undefined){
@@ -148,12 +178,15 @@ async function update() {
     }
 
     const updateinfo = await patientCollections.updateOne({ _id: id } , updatedata);
-    return await this.getUser(id);
+    return await this.getEvent(id);
 }
 
 module.exports = {
-    getUser,
+    getEvent,
     getAll,
     getUserByUsername,
-    addUser
+    createEvent,
+    getEventsOfCategory,
+    getEventsOfCategories,
+    cats
 };

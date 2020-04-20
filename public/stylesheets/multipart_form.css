@@ -1,0 +1,57 @@
+/* Style the form */
+#new_event_form1 {
+    background-color: #ffffff;
+    margin: 100px auto;
+    padding: 40px;
+    width: 70%;
+    min-width: 300px;
+}
+#new_event_form #nextBtn, #new_event_form #prevBtn {
+    /*background-color: #21ba45;*/
+    /*border: 2px solid #21ba45;*/
+}
+#new_event_form .ui.button.active {
+    background-color: #2185d0 !important;
+    color: white;
+}
+
+/* Style the input fields */
+input {
+    padding: 10px;
+    width: 100%;
+    font-size: 17px;
+    font-family: Raleway;
+    border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+    background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+    display: none;
+}
+
+/* Make circles that indicate the steps of the form: */
+#new_event_form .w3-step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+
+/* Mark the active step: */
+#new_event_form .w3-step.active {
+    opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+#new_event_form .w3-step.finish {
+    background-color: #2185d0;
+}
