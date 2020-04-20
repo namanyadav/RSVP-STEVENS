@@ -241,27 +241,96 @@ function removeValidationRuleDemo() {
         // removing multiple at once
         .form('remove fields', ['gender', 'password'])
 }
+function removeFilter(el) {
+    $(el).closest('.badge').remove();
+    getFilteredResults();
+}
+let selected_filters = '#selected_filters';
+let cat_labels = {
+    music: 'Music',
+    artsnculture: 'Arts & Culture',
+    sportsnwellness: 'Sports & Wellness',
+    foodndrinks: 'Food & Drinks'
+}
+function clearFilters() {
+
+}
+function getCurrentFilters() {
+    let applied_filters = {
+        cat: []
+    }
+    let filter_list = $(selected_filters).find('.badge');
+    for(let i=0; i<filter_list.length; i++) {
+        let filter_val = $(filter_list[i]).data('filter-val')
+        applied_filters.cat.push(filter_val);
+    }
+    return applied_filters;
+}
+function getFilteredResults() {
+    let selectedFilters = getCurrentFilters();
+    let catsFilter = `cats=[${selectedFilters.cat.join(',')}]`;
+    // alert(`get retulsts for ${selectedFilters.cat}`)
+    $.ajax({
+        url: `/search?${catsFilter}`,
+        type: 'get',
+        success: function (res) {
+            // alert('search susccess');
+            $('#event-panel').html(res)
+        },
+        error: function (err) {
+            alert('search fail')
+        }
+    })
+}
+function addFilter(filter_name, filter_val) {
+    if(filter_name == 'cat') {
+        if(filter_val == 'all') {
+            alert(`allfilters: ${getCurrentFilters().cat}`)
+        } else {
+            if($.inArray(filter_val, getCurrentFilters().cat) == -1) {
+                // Retrieve the template data from the HTML (jQuery is used here).
+                var template = $('#badge-template').html();
+                // Compile the template data into a function
+                var templateScript = Handlebars.compile(template);
+                var context = { "filter-val" : filter_val, "filter-label" : cat_labels[filter_val] };
+                var html = templateScript(context);
+                // Insert the HTML code into the page
+                $(selected_filters).append(html);
+                getFilteredResults();
+            } else {
+                // filter already applied. do nothing.
+                // alert('already added to filters');
+            }
+
+        }
+    }
+
+}
 function test_fun() {
     $('#new_event_form').form('validate form');
 }
 
 $(document).ready(function () {
-    $('.ui.checkbox').checkbox();
-    $('.ui.dropdown').dropdown();
+
+    if($('.ui.checkbox').length)    $('.ui.checkbox').checkbox();
+    if($('.ui.dropdown').length)    $('.ui.dropdown').dropdown();
     $('.buttongrp .ui.button.toggle').click(function (){
         $('.buttongrp .ui.button.toggle').removeClass('active');
         $(this).addClass('active');
         $(new_event_form).form('set value', 'category', $(this).data('category'))
         validateField('category')
     });
-    $('.ui.calendar').calendar();
+    if($('.ui.calendar').length)    $('.ui.calendar').calendar();
     // init_new_event_form('#new_event_form')
     // alert('definging submit event for new_event_form')
-    $('#new_event_form').submit(function (event) {
-        event.preventDefault();
-        // alert("submit stopped");
-        // return false;
-        create_new_event('#new_event_form', event)
-    });
-    config_form_validation()
+    if($('#new_event_form').length) {
+        $('#new_event_form').submit(function (event) {
+            event.preventDefault();
+            // alert("submit stopped");
+            // return false;
+            create_new_event('#new_event_form', event)
+        });
+        config_form_validation()
+    }
+
 })

@@ -1,5 +1,6 @@
 const users = require('./users');
 const events = require('./events');
+const eventsData = require('../com/rsvp/data/events');
 const path = require('path');
 
 const constructorMethod = (app) => {
@@ -19,6 +20,30 @@ const constructorMethod = (app) => {
 	});
 	app.get('/login', (req, res) => {
 		res.render('login');
+	});
+	app.get('/home', async (req, res) => {
+		let eventList = await eventsData.getAll();
+		// let catEventList = await eventsData.getEventsOfCategory(eventsData.cats.music);
+		// let foodEventList = await eventsData.getEventsOfCategory(eventsData.cats.foodndrinks);
+		// let artsEventList = await eventsData.getEventsOfCategory(eventsData.cats.artsnculture);
+		// let sportsEventList = await eventsData.getEventsOfCategory(eventsData.cats.sportsnwellness);
+		let catEventList = await eventsData.getEventsOfCategories([eventsData.cats.music, eventsData.cats.artsnculture]);
+		res.render('home', {eventList: eventList})
+		// res.render('home', {eventList: eventList, catEventList: catEventList, foodEventList: foodEventList, artsEventList: artsEventList, sportsEventList: sportsEventList})
+	});
+	app.get('/search', async (req, res) => {
+		let cats = req.query.cats;
+		let catList = [];
+		if(cats) {
+			cats = cats.trim();
+			cats = cats.replace('[','').replace(']','');
+			catList = cats.split(',')
+		}
+		// console.log(catList);
+		let eventList = await eventsData.getEventsOfCategories(catList);
+		// console.log(eventList);
+		// res.json(eventList);
+		res.render('partials/home_event_panel', {eventList: eventList})
 	});
 	app.use("*", (req, res) => {
 		res.status(404).json({ error: "Not found" });

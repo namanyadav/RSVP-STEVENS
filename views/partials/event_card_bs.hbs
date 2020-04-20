@@ -1,0 +1,29 @@
+<div class="card">
+    <!--                            <a href="#" class="stretched-link">Checkout event</a>-->
+    <div class="ribbon-wrapper">
+        {{#if event.isPaid}}
+            <div class="ribbon green" style="display: none">${{event.cost}}</div>
+        {{else}}
+            <div class="ribbon green">'Free'</div>
+        {{/if}}
+
+    </div>
+    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+    <div class="card-body">
+        <a href="#" class="stretched-link"><h6 class="card-title">{{event.title}}</h6></a>
+        <p class="card-meta light">{{event.category}}</p>
+        <p class="card-meta">{{event.sDate}}</p>
+
+        <p class="card-text">
+            <i class="fa fa-map-marker"></i>
+            <!--            <span>123 Jackson St,</span>-->
+            <span>{{event.state}}, {{event.country}}</span>
+        </p>
+        <!--                            <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>-->
+        <!--                            <a href="#" class="btn btn-primary stretched-link">See Profile</a>-->
+    </div>
+    <div class="card-footer card-meta">
+        <i class="fa fa-users" aria-hidden="true"></i>
+        <span class="">22 attending</span>
+    </div>
+</div>

@@ -4,7 +4,12 @@ const events = mongoCollections.events;
 const ObjectID = require('mongodb').ObjectID;
 // const bcrypt = require("bcrypt");
 const saltRounds = 5;
-
+const cats = {
+    music: 'music',
+    foodndrinks: 'foodndrinks',
+    artsnculture: 'artsnculture',
+    sportsnwellness: 'sportsnwellness'
+}
 async function getEvent(id){
     if(id === undefined){
         throw 'input is empty';
@@ -48,6 +53,30 @@ async function createEvent(eventJson){
     return await this.getEvent(InsertInfo.insertedId);
 }
 
+async function getEventsOfCategory(category) {
+    let eventList = await getAll();
+    let resultList = [];
+    for(let i=0; i<eventList.length; i++) {
+        let event = eventList[i];
+        if(event.category == category) {
+            resultList.push(event);
+        }
+    }
+    return resultList;
+}
+
+async function getEventsOfCategories(categoryList) {
+    let eventList = await getAll();
+    let resultList = [];
+    for(let i=0; i<eventList.length; i++) {
+        let event = eventList[i];
+        if(categoryList.includes(event.category)) {
+            resultList.push(event);
+        }
+    }
+    return resultList;
+}
+
 async function getUserByUsername(username){
     if(username === undefined){
         throw 'input is empty';
@@ -61,7 +90,7 @@ async function getUserByUsername(username){
 }
 
 async function getAll(){
-    const patientCollections = await patient();
+    const patientCollections = await events();
     const targets = await patientCollections.find({}).toArray();
     return targets;
 }
@@ -156,5 +185,8 @@ module.exports = {
     getEvent,
     getAll,
     getUserByUsername,
-    createEvent
+    createEvent,
+    getEventsOfCategory,
+    getEventsOfCategories,
+    cats
 };
