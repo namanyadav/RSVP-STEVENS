@@ -1,4 +1,6 @@
-<div class="card">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+      crossorigin="anonymous"></script>
+<div class="card"  onclick="goToDetails({{event}})">
     <!--                            <a href="#" class="stretched-link">Checkout event</a>-->
     <div class="ribbon-wrapper">
         {{#if event.isPaid}}
@@ -8,9 +10,9 @@
         {{/if}}
 
     </div>
-    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+    <img class="card-img-top" src={{event.imageUrl}} alt="Card image" style="width:100%">
     <div class="card-body">
-        <a href="#" class="stretched-link"><h6 class="card-title">{{event.title}}</h6></a>
+        <a href="/details/?id={{event._id}}" class="stretched-link"></a><h6 class="card-title">{{event.title}}</h6></a>
         <p class="card-meta light">{{event.category}}</p>
         <p class="card-meta">{{event.sDate}}</p>
 

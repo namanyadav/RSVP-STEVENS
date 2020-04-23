@@ -44,7 +44,8 @@ async function createEvent(eventJson){
         cost: eventJson.pricing == 'paid' ? eventJson.cost : 0,
         stAddr: eventJson.stAddr,
         state: eventJson.state,
-        country: eventJson.country
+        country: eventJson.country,
+        imageUrl: eventJson.imageUrl
     };
 
     const InsertInfo = await eventCollections.insertOne(event);

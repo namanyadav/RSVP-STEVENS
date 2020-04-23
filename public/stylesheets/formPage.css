@@ -16,7 +16,7 @@ body {
 
 .header {
   overflow: hidden;
-  background-color: #F5F5DC;
+  background-color: white;
   padding: 20px 10px;
   border-bottom: 2px solid lightgray;
 }
@@ -69,7 +69,7 @@ body {
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #F5F5DC;
+    background: white;
     border: 2px solid #5C4070;
     text-align: center;
 }

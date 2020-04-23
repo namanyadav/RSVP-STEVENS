@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         usersResponse['username'], usersResponse['email'], usersResponse['password'], 
         "2012388477", "07-13-1994"," 1 Castle Point Ter, Hoboken, NJ 07030"
       );
-      res.render('dashboard', {data: result});
+      res.render('home', {data: result});
     } catch (e) {
       res.status(400).render('signup', {
         error: e,
@@ -51,7 +51,7 @@ router.post('/', async (req, res) => {
     try {
         const result = await usersData.checkLogin( usersResponse['email'], usersResponse['password']
       );
-      res.render('dashboard', {data: result});
+      res.render('home', {data: result});
     } catch (e) {
       res.status(400).render('login', {
         error: e,

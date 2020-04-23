@@ -18,7 +18,7 @@ const app = express();
 hbs.registerHelper('ifEquals', function(arg1, arg2, options) { if (arg1 == arg2) {return options.fn(this)} return options.inverse(this); });
 hbs.registerHelper('ifNotEquals', function(arg1, arg2, options) { if (arg1 != arg2) {return options.fn(this)} return options.inverse(this); });
 hbs.registerPartials(__dirname + '/views/partials', function (err) {});
-// hbs.registerPartial('partial_name', 'partial value');
+hbs.registerPartial('partial_name', 'partial value');
 
 // let hbs = exphbs.create({
 //   defaultLayout: "main",
@@ -35,8 +35,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+//app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

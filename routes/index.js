@@ -2,6 +2,7 @@ const users = require('./users');
 const events = require('./events');
 const eventsData = require('../com/rsvp/data/events');
 const path = require('path');
+var eventData = require('../com/rsvp/data/events')
 
 const constructorMethod = (app) => {
 	app.use('/users', users);
@@ -43,7 +44,20 @@ const constructorMethod = (app) => {
 		let eventList = await eventsData.getEventsOfCategories(catList);
 		// console.log(eventList);
 		// res.json(eventList);
-		res.render('partials/home_event_panel', {eventList: eventList})
+		res.render('partials/home_event_panel', {eventList: eventList, isSearch:true})
+	});
+
+	app.get('/details', async (req, res) => {
+		//console.log(req.body.title)
+		try{
+			const data = await eventsData.getEvent(req.query.id);
+		res.render('details',{
+			event: data
+		  });
+		}
+		catch (e) {
+			res.status(400).json({error: e});
+		}
 	});
 	app.use("*", (req, res) => {
 		res.status(404).json({ error: "Not found" });

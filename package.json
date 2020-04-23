@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "node_modules/.bin/mocha"
+    "test": "node_modules/.bin/mocha",
+    "seed": "node ./task/seed.js"
   },
   "dependencies": {
     "@material/card": "^5.1.0",

@@ -1,3 +1,4 @@
+
 function create_new_event(el, e) {
     // alert(`trigger ${e.target}`)
     // e.preventDefault();
@@ -306,6 +307,24 @@ function addFilter(filter_name, filter_val) {
     }
 
 }
+function goToDetails(data){
+
+    $('.card').click(function() {
+        //alert(`hi ${event.title}`);
+        $.ajax({
+            url: `/details`,
+            type: 'post',
+            data:data,
+            success: function (res) {
+                alert("search succees")
+            },
+            error: function (err) {
+                alert("search fail")
+            }
+        })
+      });
+
+}
 function test_fun() {
     $('#new_event_form').form('validate form');
 }
@@ -332,5 +351,111 @@ $(document).ready(function () {
         });
         config_form_validation()
     }
+ 
+        $('#AriaPay').submit(function (event) {
+            event.preventDefault();
+            if(  payment_form_validation()) {
+                $( "#registration" ).show();
+                $( "#payment" ).hide();
+            }
+       
+         
+        });
+   
+    initMap()
+
+
+   // initialize()
+
 
 })
+function initMap() {
+    // The location of Uluru
+    var uluru = {lat: 40.057347, lng: -74.414532};
+    // The map, centered at Uluru
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 4, center: uluru});
+    // The marker, positioned at Uluru
+    var marker = new google.maps.Marker({position: uluru, map: map});
+  }
+
+//   var geocoder;
+//   var map;
+//   var address = document.getElementById('place').innerText;
+// //var address = "Craft House, 500 Terry A Francois Blvd, San Francisco, CA 94158, USA";
+//   function initialize() {
+//     geocoder = new google.maps.Geocoder();
+//     var latlng = new google.maps.LatLng(-34.397, 150.644);
+//     var mapOptions = {
+//       zoom: 8,
+//       center: latlng
+//     }
+//     map = new google.maps.Map(document.getElementById('map'), mapOptions);
+//     if (geocoder) {
+//       geocoder.geocode( { 'address': address}, function(results, status) {
+//         if (status == 'OK') {
+//             map.setCenter(results[0].geometry.location);
+//             var marker = new google.maps.Marker({
+//                 map: map,
+//                 position: results[0].geometry.location
+//             });
+//           } else {
+//             alert('Geocode was not successful for the following reason: ' + status);
+//           }
+//         });
+//     }
+//   }
+function functionPaymentAlert(cost) {
+    //alert(cost)
+    if(cost !=0){
+    $( "#payment" ).show();
+  }
+  else{
+    $( "#registration" ).show();
+  }
+}
+
+function payment_form_validation() {
+var myForm = document.getElementById("AriaPay");
+    if( myForm.cc_no.value == "" ) {
+        alert( "Please enter card details!" );
+        myForm.cc_no.focus() ;
+        return false;
+     }
+     if( myForm.cc_exp_mm.value == "" ) {
+        alert( "Please enter a expiry month!" );
+        myForm.cc_exp_mm.focus() ;
+        return false;
+     }
+     if( myForm.cc_exp_yyyy.value == "" ) {
+        alert( "Please enter expiry year!" );
+        myForm.cc_exp_yyyy.focus() ;
+        return false;
+     }
+     if( myForm.cvv.value == "" ) {
+        alert( "Please enter cvv number!" );
+        myForm.cvv.focus() ;
+        return false;
+     }
+     return true ;
+
+}
+
+ $(document).mouseup(function(e) 
+{
+    var container = $("#payment");
+
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.hide();
+    }
+    var container_reg = $("#registration");
+
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container_reg.is(e.target) && container_reg.has(e.target).length === 0) 
+    {
+        container_reg.hide();
+    }
+
+});

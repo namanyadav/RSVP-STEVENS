@@ -461,3 +461,153 @@ span.cc{ color:#6d84b4 }
   padding-left: 0;
   padding-right: 0;
 }
+
+
+.image-container {
+  margin-top: 40px;
+  position: relative;
+  width: 100%;
+  background-color: #808080;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-style: ridge;
+}
+.card-img-top {
+  height: 180px;
+}
+.row {
+  clear: both;
+}
+.col-md-4 {
+  float: left;
+  width: 200px;
+}
+
+.image-details {
+  opacity: 0.5;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+.inset {
+  background-color:black;
+  color: white;
+  font-size: 16px;
+  padding: 16px 162px;
+  border: black;
+  margin-top: 20px;
+
+}
+ .title {
+  color: black;
+  font-size: 50px;
+  font-family: graduate;
+
+}
+.image-container:hover .image-details {
+  opacity: 0.2;
+}
+
+
+.middle .date {
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
+
+}
+.middle .place {
+  color: black;
+  font-size: 18px;
+  margin-top: 10px;
+
+  font-style: italic;
+  font-weight: 700;
+
+
+}
+
+.middle .cost {
+  margin-top: 10px;
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
+
+}
+
+
+
+.middle {
+
+  text-align: center;
+  top: 66%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.details-container {
+  position: relative;
+  width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 40px;
+  padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+  border-style: ridge;
+}
+
+#map {
+  width: 100%;
+  height: 400px;
+  margin-left: 20px;
+  margin-right: 20px;
+    border-style: ridge;
+  background-color: grey;
+  margin-bottom: 150px;
+}
+#payment {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+#registration {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+.paymethodfieldset{
+  padding: 100px;
+}
+#submitPayment{
+  background-color:black;
+  color: white;
+  font-size: 16px;
+  padding-left:50px;
+  padding-right: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+
+}
+
+
