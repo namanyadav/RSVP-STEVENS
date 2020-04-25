@@ -22,14 +22,16 @@ const constructorMethod = (app) => {
 	app.get('/login', (req, res) => {
 		res.render('login');
 	});
-	app.get('/home', async (req, res) => {
+	app.get('/', async (req, res) => {
 		let eventList = await eventsData.getAll();
+		let user = req.session ? req.session.user : undefined;
+		user && console.log(`userin session: ${user.email}`)
 		// let catEventList = await eventsData.getEventsOfCategory(eventsData.cats.music);
-		// let foodEventList = await eventsData.getEventsOfCategory(eventsData.cats.foodndrinks);
+		// let foodEventList = await eventsData.getEventsOfCategory(eventsData.cats.foodndrinks);isSearch
 		// let artsEventList = await eventsData.getEventsOfCategory(eventsData.cats.artsnculture);
 		// let sportsEventList = await eventsData.getEventsOfCategory(eventsData.cats.sportsnwellness);
 		let catEventList = await eventsData.getEventsOfCategories([eventsData.cats.music, eventsData.cats.artsnculture]);
-		res.render('home', {eventList: eventList})
+		res.render('home', {eventList: eventList, isSearch: true, loggedInUser: user})
 		// res.render('home', {eventList: eventList, catEventList: catEventList, foodEventList: foodEventList, artsEventList: artsEventList, sportsEventList: sportsEventList})
 	});
 	app.get('/search', async (req, res) => {

@@ -242,6 +242,18 @@ function removeValidationRuleDemo() {
         // removing multiple at once
         .form('remove fields', ['gender', 'password'])
 }
+function scrollToEvents() {
+    if($('.home').length) {
+        $('html, body').animate({
+            scrollTop: $("#navbar").offset().top
+        }, 1000);
+    }
+}
+function navtopage(el) {
+    // alert(`clickded`)
+    $(el).closest('.navbar-nav').find('.active').removeClass('active');
+    $(el).addClass('active')
+}
 function removeFilter(el) {
     $(el).closest('.badge').remove();
     getFilteredResults();
@@ -350,6 +362,33 @@ $(document).ready(function () {
             create_new_event('#new_event_form', event)
         });
         config_form_validation()
+    }
+
+    if($('.home').length) {
+        window.onscroll = function() {fixnavbar()};
+    }
+
+    var navbar = document.getElementById("navbar");
+    var filterbar = document.getElementById("filter-list")
+    var eventpane = document.getElementById("filter-pane");
+    var sticky = navbar.offsetTop;
+
+    function fixnavbar() {
+        if (window.pageYOffset > sticky) {
+            navbar.classList.add("fixed-top")
+            filterbar.classList.add("fixed-top")
+            eventpane.classList.add("offset-sm-3")
+        } else {
+            navbar.classList.remove("fixed-top");
+            filterbar.classList.remove("fixed-top")
+            eventpane.classList.remove("offset-sm-3")
+        }
+    }
+
+    if($('.home').length && $('#loggedinuser').length) {
+        let loggedinuser = $('#loggedinuser').val();
+        // alert(loggedinuser);
+        scrollToEvents();
     }
  
         $('#AriaPay').submit(function (event) {
