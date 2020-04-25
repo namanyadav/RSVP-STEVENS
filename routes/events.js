@@ -1,7 +1,10 @@
 var express = require('express');
 var eventData = require('../com/rsvp/data/events')
 var router = express.Router();
-
+const usersData = require('../data/users');
+const middy = require('middy')
+const middlewares = require('middy/middlewares')
+const chromium = require('chrome-aws-lambda')
 
 /* new event page */
 router.get('/new', function(req, res, next) {
@@ -63,6 +66,38 @@ router.post('/:id/update', function(req, res, next) {
 /* delete event */
 router.post('/:id/delete', function(req, res, next) {
   res.send(`event deleted with id [${req.params.id}]`);
+});
+
+router.post('/ticket', async function(req, res) {
+  console.log(req.query.id);
+  const event = await eventData.getEvent(req.query.id);
+  try {
+    let eventList = await eventData.getAll();
+    const userData = await usersData.getUser(req.query.userId);
+    const handler = await eventData.generateTicket(req.query.id, req.query.userId).then(handler => {
+      middy(handler)
+      .use(middlewares.httpHeaderNormalizer())
+      .use(middlewares.cors())
+      .use(middlewares.doNotWaitForEmptyEventLoop())
+      .use(middlewares.httpErrorHandler());
+    });
+    //res.send(handler);
+    res.render('home', {
+      data: userData,
+       eventList: eventList
+      }
+      );
+  
+  } catch (e) {
+    console.log("error:"+e)
+    res.status(400).render('details', {
+      error: e,
+      hasErrors: true,
+      event: event,
+			userId: req.query.userId
+    });
+
+  }
 });
 
 module.exports = router;

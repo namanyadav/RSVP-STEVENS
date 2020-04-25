@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usersData = require('../data/users');
+var eventsData = require('../com/rsvp/data/events')
 
 
 router.post('/', async (req, res) => {
@@ -21,11 +22,16 @@ router.post('/', async (req, res) => {
     }
   
     try {
+      let eventList = await eventsData.getAll();
       const result = await usersData.addUsers(
         usersResponse['username'], usersResponse['email'], usersResponse['password'], 
         "2012388477", "07-13-1994"," 1 Castle Point Ter, Hoboken, NJ 07030"
       );
-      res.render('home', {data: result});
+      res.render('home', {
+        data: result,
+         eventList: eventList
+        }
+        );
     } catch (e) {
       res.status(400).render('signup', {
         error: e,
@@ -49,9 +55,14 @@ router.post('/', async (req, res) => {
     }
   
     try {
+      let eventList = await eventsData.getAll();
         const result = await usersData.checkLogin( usersResponse['email'], usersResponse['password']
       );
-      res.render('home', {data: result});
+      console.log(result._id)
+      res.render('home', {
+        data: result,
+        eventList: eventList
+      });
     } catch (e) {
       res.status(400).render('login', {
         error: e,

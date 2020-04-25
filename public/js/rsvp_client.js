@@ -283,7 +283,7 @@ function getFilteredResults() {
         }
     })
 }
-function addFilter(filter_name, filter_val) {
+function addFilter(filter_name, filter_val, userId) {
     if(filter_name == 'cat') {
         if(filter_val == 'all') {
             alert(`allfilters: ${getCurrentFilters().cat}`)
@@ -297,7 +297,7 @@ function addFilter(filter_name, filter_val) {
                 var html = templateScript(context);
                 // Insert the HTML code into the page
                 $(selected_filters).append(html);
-                getFilteredResults();
+                getFilteredResults(userId);
             } else {
                 // filter already applied. do nothing.
                 // alert('already added to filters');
@@ -330,6 +330,9 @@ function test_fun() {
 }
 
 $(document).ready(function () {
+    window.addEventListener('load', (event) => {
+        $('#loading').hide();
+    });
 
     if($('.ui.checkbox').length)    $('.ui.checkbox').checkbox();
     if($('.ui.dropdown').length)    $('.ui.dropdown').dropdown();
@@ -364,8 +367,13 @@ $(document).ready(function () {
    
     initMap()
 
-
+    NProgress.configure({
+        template: "<dialog open>Loading...</dialog>"
+      });
    // initialize()
+   $("#submitRegistration").click(function () {
+    $('#loading').show();
+    });
 
 
 })
@@ -459,3 +467,24 @@ var myForm = document.getElementById("AriaPay");
     }
 
 });
+
+$(document).on('page:fetch',   function() { 
+    alert("loading..");
+    NProgress.start(); 
+});
+$(document).on('page:change',  function() { 
+    alert("loading finished..")
+    NProgress.done();
+ });
+$(document).on('page:restore', function() { NProgress.remove(); });
+
+$(document).on('turbolinks:click', function() {
+    alert("turbo loading..");
+    NProgress.start();
+  });
+  $(document).on('turbolinks:render', function() {
+    alert("turbo loading finished..")
+    NProgress.done();
+    NProgress.remove();
+  });
+

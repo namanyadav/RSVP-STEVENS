@@ -50,11 +50,11 @@
         <div class="col-sm-3 filter-list">
             <h2>Filter</h2>
             <h5>Category</h5>
-            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat', 'all')">All</button>
-            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat', 'music')">Music</button>
-            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat','artsnculture')">Arts & Culture</button>
-            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat','sportsnwellness')">Sports & Wellness</button>
-            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat','foodndrinks')">Food & Drinks</button>
+            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat', 'all', {{data._id}})">All</button>
+            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat', 'music', {{data._id}})">Music</button>
+            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat','artsnculture', {{data._id}})">Arts & Culture</button>
+            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat','sportsnwellness', {{data._id}})">Sports & Wellness</button>
+            <button class="btn btn-link col-md-12 text-left" type="button" onclick="addFilter('cat','foodndrinks', {{data._id}})">Food & Drinks</button>
 
         </div>
         <div class="col-sm-9">
@@ -66,7 +66,7 @@
                 <div id="badge-template" style="display: none">
                     <span class="badge badge-dark" data-filter-val="\{{filter-val}}" style="vertical-align: center; margin: 0 0.5px;">
                         <span class="filter-label">\{{filter-label}}</span>
-                        <i class="fa fa-times" onclick="removeFilter(this)"></i>
+                        <i class="fa fa-times" onclick="removeFilter(this, {{data._id}})"></i>
                     </span>
                 </div>
             </div>
@@ -74,7 +74,7 @@
 <!--            <h5>Latest event in New Jersey on Apr 18, 2020</h5>-->
 
             <div class="event-panel" id="event-panel">
-                {{>home_event_panel}}
+                {{>home_event_panel data=data}}
             </div>
 
         </div>

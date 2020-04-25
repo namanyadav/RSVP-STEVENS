@@ -1,8 +1,12 @@
 const mongoCollections = require("./mongoCollections");
 const connection = require("./mongoConnection");
 const events = mongoCollections.events;
+const usersData = require('../data/users');
 const ObjectID = require('mongodb').ObjectID;
 // const bcrypt = require("bcrypt");
+const puppeteer = require('puppeteer')
+const chromium = require('chrome-aws-lambda')
+const nodemailer = require("nodemailer");
 const saltRounds = 5;
 const cats = {
     music: 'music',
@@ -182,6 +186,46 @@ async function update() {
     return await this.getEvent(id);
 }
 
+async function generateTicket(id, userId) {
+    const userOld = await usersData.getUser(userId);
+
+    let transport = nodemailer.createTransport({
+        host: 'smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+           user: '3cd55a28d816d2',
+           pass: '4e2d3ebed59090'
+        }
+    });
+    const executablePath= await chromium.executablePath;
+
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    executablePath
+  });
+    const page = await browser.newPage();
+    await page.goto('http://localhost:3000/details/ticket.pdf?id='+id+'&userId='+userId, { waitUntil: ["networkidle0", "load", "domcontentloaded"]});
+    const pdf = await page.pdf();
+    await browser.close();
+    const message = {
+        from: userOld.email,
+        to: userOld.email,
+        subject: 'RSVP ticket confirmation',
+        text: 'PFA the ticket',
+        attachments: [
+            {   // utf-8 string as an attachment
+                filename: 'ticket.pdf',
+                content:pdf,
+                contentType: 'application/pdf'
+            },
+        ]
+    };
+    transport.sendMail(message, function (err, info) {
+        if (err) throw err; 
+     });
+    return ""
+}
+
 module.exports = {
     getEvent,
     getAll,
@@ -189,5 +233,6 @@ module.exports = {
     createEvent,
     getEventsOfCategory,
     getEventsOfCategories,
-    cats
+    cats,
+    generateTicket
 };

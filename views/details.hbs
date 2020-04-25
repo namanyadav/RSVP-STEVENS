@@ -8,6 +8,12 @@
     <title>Details Page</title>
 </head>
 <body>
+    {{#if hasErrors}}
+ 
+      <div id = "error_alert" class="error"> {{error}}</div>
+      <div id = "closebtnId1" class="closebtn"> &times;</div>
+  {{/if}}
+
 <div class="image-container">
     <img src={{event.imageUrl}} style="width:100%" class="image-details">
       <div class="middle">
@@ -109,15 +115,15 @@
 </dialog>
 
   <dialog open id = "registration">
-   <form  name="AriaPay" action="/home" method="get" action="">   
+   <form  name="AriaPay" method="post" action="/events/ticket?id={{event._id}}&userId={{userId}}">   
     <fieldset class="paymethodfieldset">
                         
         <div style="margin-bottom: 50px;">
-             <h2> Registration Successful </h2>            
+             <h2> Registration Successful. Your ticket to the event will be emailed. </h2>            
         </div>      
     
 </fieldset>     
-       <input type="submit" class="button"  value="Browse Other Events" id="submitPayment"  />             
+       <input type="submit" class="button"   value="Email Ticket" id="submitRegistration"  />             
 
 </form>
 </dialog>
