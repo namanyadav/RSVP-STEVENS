@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-dark primary-color" id="navbar" style="background-color: #343a40!important;">
+
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="#">RSVP Stevens</a>
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+            aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="basicExampleNav">
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active" onclick1="navtopage(this); return false;">
+                <a class="nav-link" href="/">Home
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item" onclick1="navtopage(this); return false;">
+                <a class="nav-link" href="#">My Events</a>
+            </li>
+            <li class="nav-item" onclick1="navtopage(this); return false;">
+                <a class="nav-link" href="/events/new">Create</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa fa-search"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline">
+                    <div class="md-form my-0">
+                        <a class="nav-link" style="padding: 0">
+                            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
+                        </a>
+                    </div>
+                </form>
+                <!--<a class="nav-link" href="#">
+                </a>-->
+            </li>
+
+
+        </ul>
+        <!-- Links -->
+
+        <form class="form-inline">
+            <div class="md-form my-0">
+                <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
+            </div>
+        </form>
+        <!--        <button type="button" class="btn btn-default" style="background-color: transparent !important; border: 1px solid whitesmoke">Login</button>-->
+        {{#if loggedInUser}}
+            <a href="/users/logout" class="btn btn-default" style="background-color: transparent !important; border: 1px solid whitesmoke">Logout</a>
+            <input type="hidden" value="{{loggedInUser.email}}" name="loggedinuser" id="loggedinuser"/>
+            <!--            <p>{{loggedInUser.email}} in session</p>-->
+        {{else}}
+            <!--            <p>user not in session</p>-->
+            <a href="/login" class="btn btn-default" style="background-color: transparent !important; border: 1px solid whitesmoke">Login</a>
+        {{/if}}
+    </div>
+    <!-- Collapsible content -->
+
+</nav>

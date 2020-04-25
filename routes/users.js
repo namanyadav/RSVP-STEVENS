@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usersData = require('../data/users');
+const eventsData = require('../com/rsvp/data/events');
 
 
 router.post('/', async (req, res) => {
@@ -36,6 +37,11 @@ router.post('/', async (req, res) => {
     }
   });
 
+  router.get('/logout', async (req, res) => {
+    req.session.destroy();
+    // res.status(200).json('user logged out')
+    res.redirect('/')
+  })
   router.post('/login', async (req, res) => {
     let usersResponse = req.body;
     if (!usersResponse.email) {
@@ -49,10 +55,15 @@ router.post('/', async (req, res) => {
     }
   
     try {
-        const result = await usersData.checkLogin( usersResponse['email'], usersResponse['password']
-      );
-      res.render('home', {data: result});
+        const result = await usersData.checkLogin( usersResponse['email'], usersResponse['password']);
+      let eventList = await eventsData.getAll();
+      console.log(`user logged in ${result.email}`)
+      req.session.user = result
+      // res.render('home', {data: result});
+      //   res.render('home', {loggedInUser: result, eventList: eventList, isSearch: true})
+      res.redirect('/')
     } catch (e) {
+      console.log(e.message)
       res.status(400).render('login', {
         error: e,
         hasErrors: true,

@@ -473,7 +473,10 @@ span.cc{ color:#6d84b4 }
   border-style: ridge;
 }
 .card-img-top {
-  height: 180px;
+  height: auto;
+}
+.card-body a {
+  padding: 0;
 }
 .row {
   clear: both;
