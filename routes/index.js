@@ -32,13 +32,7 @@ const constructorMethod = (app) => {
 		// let artsEventList = await eventsData.getEventsOfCategory(eventsData.cats.artsnculture);
 		// let sportsEventList = await eventsData.getEventsOfCategory(eventsData.cats.sportsnwellness);
 		let catEventList = await eventsData.getEventsOfCategories([eventsData.cats.music, eventsData.cats.artsnculture]);
-<<<<<<< HEAD
 		res.render('home', {eventList: eventList, isSearch: true, loggedInUser: user, catLabels: eventsData.cat_labels})
-=======
-
-		res.render('home', {eventList: eventList, isSearch: true, loggedInUser: user})
-
->>>>>>> master
 		// res.render('home', {eventList: eventList, catEventList: catEventList, foodEventList: foodEventList, artsEventList: artsEventList, sportsEventList: sportsEventList})
 	});
 	app.get('/search', async (req, res) => {

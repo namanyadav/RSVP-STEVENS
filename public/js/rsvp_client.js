@@ -355,19 +355,19 @@ $(document).ready(function () {
     });
     $("#submitRegistration").click(function () {
         $('#loading').show();
-        });
+    });
  
-        $('#AriaPay').submit(function (event) {
-            event.preventDefault();
-            if(  payment_form_validation()) {
-                $( "#registration" ).show();
-                $( "#payment" ).hide();
-            }
-       
-         
-        });
-   
-    initMap()
+    $('#AriaPay').submit(function (event) {
+        event.preventDefault();
+        if(  payment_form_validation()) {
+            $( "#registration" ).show();
+            $( "#payment" ).hide();
+        }
+    });
+
+    if($('#event_details_page').length) {
+        initMap()
+    }
     if($('.ui.checkbox').length)    $('.ui.checkbox').checkbox();
     if($('.ui.dropdown').length)    $('.ui.dropdown').dropdown();
     $('.buttongrp .ui.button.toggle').click(function (){
