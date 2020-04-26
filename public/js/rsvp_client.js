@@ -350,7 +350,24 @@ function test_fun() {
 }
 
 $(document).ready(function () {
-
+    window.addEventListener('load', (event) => {
+        $('#loading').hide();
+    });
+    $("#submitRegistration").click(function () {
+        $('#loading').show();
+        });
+ 
+        $('#AriaPay').submit(function (event) {
+            event.preventDefault();
+            if(  payment_form_validation()) {
+                $( "#registration" ).show();
+                $( "#payment" ).hide();
+            }
+       
+         
+        });
+   
+    initMap()
     if($('.ui.checkbox').length)    $('.ui.checkbox').checkbox();
     if($('.ui.dropdown').length)    $('.ui.dropdown').dropdown();
     $('.buttongrp .ui.button.toggle').click(function (){
@@ -399,21 +416,11 @@ $(document).ready(function () {
         // alert(loggedinuser);
         scrollToEvents();
     }
- 
-        $('#AriaPay').submit(function (event) {
-            event.preventDefault();
-            if(  payment_form_validation()) {
-                $( "#registration" ).show();
-                $( "#payment" ).hide();
-            }
-       
-         
-        });
-   
-    initMap()
+
 
 
    // initialize()
+
 
 
 })
@@ -507,3 +514,7 @@ var myForm = document.getElementById("AriaPay");
     }
 
 });
+
+
+
+

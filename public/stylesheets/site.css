@@ -505,7 +505,7 @@ span.cc{ color:#6d84b4 }
 }
  .title {
   color: black;
-  font-size: 50px;
+  font-size: 30px;
   font-family: graduate;
 
 }
@@ -517,7 +517,7 @@ span.cc{ color:#6d84b4 }
 .middle .date {
   color: black;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
 
 }
 .middle .place {
@@ -596,7 +596,7 @@ span.cc{ color:#6d84b4 }
 .paymethodfieldset{
   padding: 100px;
 }
-#submitPayment{
+#submitPayment, #submitRegistration{
   background-color:black;
   color: white;
   font-size: 16px;
@@ -639,6 +639,28 @@ input[name="search"] {
   -webkit-border-radius: 10em;
   -moz-border-radius: 10em;
   border-radius: 10em;
+#loading {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: block;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+  text-align: center;
+}
+
+#loading-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  z-index: 100;
+}
 
   -webkit-transition: all .5s;
   -moz-transition: all .5s;

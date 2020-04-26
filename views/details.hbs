@@ -8,6 +8,12 @@
     <title>Details Page</title>
 </head>
 <body>
+    {{#if hasErrors}}
+ 
+      <div id = "error_alert" class="error"> {{error}}</div>
+      <div id = "closebtnId1" class="closebtn"> &times;</div>
+  {{/if}}
+
 <div class="image-container">
     <img src={{event.imageUrl}} style="width:100%" class="image-details">
       <div class="middle">
@@ -30,17 +36,14 @@
     </div>
 
         <div id="map"></div>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-      crossorigin="anonymous"></script>
           {{!-- <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrC5OVcReKV_erloJv15kVuxYLvrBcLAQ&callback=initMap"> --}}
     <script  async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCrC5OVcReKV_erloJv15kVuxYLvrBcLAQ&callback=initMap"></script>
 
 </div>
- <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
   <dialog open id = "payment">
-   <form id="AriaPay" name="AriaPay"  method="post">   
+   <form id="AriaPay" name="AriaPay"  method="post" action="">   
     <fieldset class="paymethodfieldset">
                         
         <div style="margin-bottom: 50px;">
@@ -109,19 +112,20 @@
 </dialog>
 
   <dialog open id = "registration">
-   <form  name="AriaPay" action="/home" method="get" action="">   
+   <form  name="AriaPay" method="post" action="/events/ticket?id={{event._id}}">   
     <fieldset class="paymethodfieldset">
                         
         <div style="margin-bottom: 50px;">
-             <h2> Registration Successful </h2>            
+             <h2> Registration Successful. Your ticket to the event will be emailed. </h2>            
         </div>      
     
 </fieldset>     
-       <input type="submit" class="button"  value="Browse Other Events" id="submitPayment"  />             
+       <input type="submit" class="button"   value="Email Ticket" id="submitRegistration"  />             
 
 </form>
 </dialog>
-
+ <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 </body>
 
 </html>
