@@ -143,8 +143,8 @@
             </div>
             <div class="col-sm-9" id="filter-pane">
                 <div class="row">
-                    <div class="col-md-4"><h2>Latest Events</h2></div>
-                    <div class="col-md-8" id="selected_filters" style="display: flex; align-items: center">
+                    <div class="col-md-3"><h2>Latest Events</h2></div>
+                    <div class="col-md-9" id="selected_filters" style="display: flex; align-items: center">
 
                     </div>
                     <div id="badge-template" style="display: none">
@@ -394,6 +394,16 @@
     input::-webkit-search-decoration,
     input::-webkit-search-cancel-button {
         display: none;
+    }
+    @media (max-width: 992px) {
+        .filter-list {
+            position: relative;
+            height: 300px;
+        }
+        #filter-list.fixed-top {
+            top: 0;
+            left: 0;
+        }
     }
 
 </style>
