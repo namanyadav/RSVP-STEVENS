@@ -1,23 +1,28 @@
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-      crossorigin="anonymous"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+      crossorigin="anonymous"></script>-->
 <div class="card"  onclick="goToDetails({{event}})">
     <!--                            <a href="#" class="stretched-link">Checkout event</a>-->
     <div class="ribbon-wrapper">
         {{#if event.isPaid}}
             <div class="ribbon green" style="display: none">${{event.cost}}</div>
         {{else}}
-            <div class="ribbon green">'Free'</div>
+            <div class="ribbon green">Free</div>
         {{/if}}
 
     </div>
-    <img class="card-img-top" src={{event.imageUrl}} alt="Card image" style="width:100%">
+    {{#if event.imageUrl}}
+        <img class="card-img-top" src="{{event.imageUrl}}" alt="Card image" style="width:100%">
+    {{else}}
+        <img class="card-img-top" src="https://loremflickr.com/400/240" alt="Card image" style="width:100%">
+<!--        <img src="https://loremflicker.com/{width}/{height}">-->
+    {{/if}}
     <div class="card-body">
-        <a href="/details/?id={{event._id}}&userId={{data._id}}" class="stretched-link"></a><h6 class="card-title">{{event.title}}</h6></a>
+        <a href="/details?id={{event._id}}" class="stretched-link"></a><h6 class="card-title">{{event.title}}</h6></a>
         <p class="card-meta light">{{event.category}}</p>
         <p class="card-meta">{{event.sDate}}</p>
 
         <p class="card-text">
-            <i class="fa fa-map-marker"></i>
+            <i class="fa fa-map-marker-alt"></i>
             <!--            <span>123 Jackson St,</span>-->
             <span>{{event.state}}, {{event.country}}</span>
         </p>

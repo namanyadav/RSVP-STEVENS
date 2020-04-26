@@ -13,8 +13,9 @@ router.get('/new', function(req, res, next) {
 });
 
 /* view user events */
-router.get('/mine', function(req, res, next) {
-  res.render('my_events', {user: 'naman'})
+router.get('/mine', async function(req, res, next) {
+  let eventList = await eventData.getAll();
+  res.render('my_events', {user: 'naman', layout: 'layouts/main', eventList: eventList})
   // res.send('all events in system');
 });
 
@@ -71,10 +72,11 @@ router.post('/:id/delete', function(req, res, next) {
 router.post('/ticket', async function(req, res) {
   console.log(req.query.id);
   const event = await eventData.getEvent(req.query.id);
+  const userData = req.session ? req.session.user : undefined;
+  console.log(userData.email)
   try {
     let eventList = await eventData.getAll();
-    const userData = await usersData.getUser(req.query.userId);
-    const handler = await eventData.generateTicket(req.query.id, req.query.userId).then(handler => {
+    const handler = await eventData.generateTicket(req.query.id, userData._id).then(handler => {
       middy(handler)
       .use(middlewares.httpHeaderNormalizer())
       .use(middlewares.cors())
@@ -83,7 +85,7 @@ router.post('/ticket', async function(req, res) {
     });
     //res.send(handler);
     res.render('home', {
-      data: userData,
+      loggedInUser: userData,
        eventList: eventList
       }
       );
@@ -94,7 +96,7 @@ router.post('/ticket', async function(req, res) {
       error: e,
       hasErrors: true,
       event: event,
-			userId: req.query.userId
+			userId: userData._id
     });
 
   }

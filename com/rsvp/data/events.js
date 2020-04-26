@@ -1,5 +1,4 @@
-const mongoCollections = require("./mongoCollections");
-const connection = require("./mongoConnection");
+const mongoCollections = require("../../../config/mongoCollections");
 const events = mongoCollections.events;
 const usersData = require('../data/users');
 const ObjectID = require('mongodb').ObjectID;

@@ -22,19 +22,19 @@ const constructorMethod = (app) => {
 	app.get('/login', (req, res) => {
 		res.render('login');
 	});
-	app.get('/home', async (req, res) => {
+	app.get('/', async (req, res) => {
 		let eventList = await eventsData.getAll();
-		const userData = await usersData.getUser(req.query.userId)
+
+		let user = req.session ? req.session.user : undefined;
+		user && console.log(`userin session: ${user.email}`)
 		// let catEventList = await eventsData.getEventsOfCategory(eventsData.cats.music);
-		// let foodEventList = await eventsData.getEventsOfCategory(eventsData.cats.foodndrinks);
+		// let foodEventList = await eventsData.getEventsOfCategory(eventsData.cats.foodndrinks);isSearch
 		// let artsEventList = await eventsData.getEventsOfCategory(eventsData.cats.artsnculture);
 		// let sportsEventList = await eventsData.getEventsOfCategory(eventsData.cats.sportsnwellness);
 		let catEventList = await eventsData.getEventsOfCategories([eventsData.cats.music, eventsData.cats.artsnculture]);
-		res.render('home', {
-			data: userData,
-			 eventList: eventList
-			}
-			);
+
+		res.render('home', {eventList: eventList, isSearch: true, loggedInUser: user})
+
 		// res.render('home', {eventList: eventList, catEventList: catEventList, foodEventList: foodEventList, artsEventList: artsEventList, sportsEventList: sportsEventList})
 	});
 	app.get('/search', async (req, res) => {
@@ -54,11 +54,13 @@ const constructorMethod = (app) => {
 
 	app.get('/details', async (req, res) => {
 		//console.log(req.body.title)
+		let user = req.session ? req.session.user : undefined;
 		try{
 			const data = await eventsData.getEvent(req.query.id);
+	
 		res.render('details',{
 			event: data,
-			userId: req.query.userId
+			userId: user._id
 		  });
 		}
 		catch (e) {
@@ -66,7 +68,7 @@ const constructorMethod = (app) => {
 		}
 	});
 	app.get('/details/ticket.pdf', async (req, res) => {
-		console.log(req.query.id)
+		console.log("userId:"+req.query.userId)
 		try{
 			const data = await eventsData.getEvent(req.query.id);
 			const userData = await usersData.getUser(req.query.userId);

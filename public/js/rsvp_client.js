@@ -242,6 +242,18 @@ function removeValidationRuleDemo() {
         // removing multiple at once
         .form('remove fields', ['gender', 'password'])
 }
+function scrollToEvents() {
+    if($('.home').length) {
+        $('html, body').animate({
+            scrollTop: $("#navbar").offset().top
+        }, 1000);
+    }
+}
+function navtopage(el) {
+    // alert(`clickded`)
+    $(el).closest('.navbar-nav').find('.active').removeClass('active');
+    $(el).addClass('active')
+}
 function removeFilter(el) {
     $(el).closest('.badge').remove();
     getFilteredResults();
@@ -283,7 +295,7 @@ function getFilteredResults() {
         }
     })
 }
-function addFilter(filter_name, filter_val, userId) {
+function addFilter(filter_name, filter_val) {
     if(filter_name == 'cat') {
         if(filter_val == 'all') {
             alert(`allfilters: ${getCurrentFilters().cat}`)
@@ -297,7 +309,7 @@ function addFilter(filter_name, filter_val, userId) {
                 var html = templateScript(context);
                 // Insert the HTML code into the page
                 $(selected_filters).append(html);
-                getFilteredResults(userId);
+                getFilteredResults();
             } else {
                 // filter already applied. do nothing.
                 // alert('already added to filters');
@@ -333,7 +345,21 @@ $(document).ready(function () {
     window.addEventListener('load', (event) => {
         $('#loading').hide();
     });
-
+    $("#submitRegistration").click(function () {
+        $('#loading').show();
+        });
+ 
+        $('#AriaPay').submit(function (event) {
+            event.preventDefault();
+            if(  payment_form_validation()) {
+                $( "#registration" ).show();
+                $( "#payment" ).hide();
+            }
+       
+         
+        });
+   
+    initMap()
     if($('.ui.checkbox').length)    $('.ui.checkbox').checkbox();
     if($('.ui.dropdown').length)    $('.ui.dropdown').dropdown();
     $('.buttongrp .ui.button.toggle').click(function (){
@@ -354,26 +380,38 @@ $(document).ready(function () {
         });
         config_form_validation()
     }
- 
-        $('#AriaPay').submit(function (event) {
-            event.preventDefault();
-            if(  payment_form_validation()) {
-                $( "#registration" ).show();
-                $( "#payment" ).hide();
-            }
-       
-         
-        });
-   
-    initMap()
 
-    NProgress.configure({
-        template: "<dialog open>Loading...</dialog>"
-      });
+    if($('.home').length) {
+        window.onscroll = function() {fixnavbar()};
+    }
+
+    var navbar = document.getElementById("navbar");
+    var filterbar = document.getElementById("filter-list")
+    var eventpane = document.getElementById("filter-pane");
+    var sticky = navbar.offsetTop;
+
+    function fixnavbar() {
+        if (window.pageYOffset > sticky) {
+            navbar.classList.add("fixed-top")
+            filterbar.classList.add("fixed-top")
+            eventpane.classList.add("offset-sm-3")
+        } else {
+            navbar.classList.remove("fixed-top");
+            filterbar.classList.remove("fixed-top")
+            eventpane.classList.remove("offset-sm-3")
+        }
+    }
+
+    if($('.home').length && $('#loggedinuser').length) {
+        let loggedinuser = $('#loggedinuser').val();
+        // alert(loggedinuser);
+        scrollToEvents();
+    }
+
+
+
    // initialize()
-   $("#submitRegistration").click(function () {
-    $('#loading').show();
-    });
+
 
 
 })
@@ -468,23 +506,6 @@ var myForm = document.getElementById("AriaPay");
 
 });
 
-$(document).on('page:fetch',   function() { 
-    alert("loading..");
-    NProgress.start(); 
-});
-$(document).on('page:change',  function() { 
-    alert("loading finished..")
-    NProgress.done();
- });
-$(document).on('page:restore', function() { NProgress.remove(); });
 
-$(document).on('turbolinks:click', function() {
-    alert("turbo loading..");
-    NProgress.start();
-  });
-  $(document).on('turbolinks:render', function() {
-    alert("turbo loading finished..")
-    NProgress.done();
-    NProgress.remove();
-  });
+
 

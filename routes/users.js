@@ -4,6 +4,7 @@ const usersData = require('../data/users');
 var eventsData = require('../com/rsvp/data/events')
 
 
+
 router.post('/', async (req, res) => {
     let usersResponse = req.body;
     let username = usersResponse.username
@@ -28,7 +29,7 @@ router.post('/', async (req, res) => {
         "2012388477", "07-13-1994"," 1 Castle Point Ter, Hoboken, NJ 07030"
       );
       res.render('home', {
-        data: result,
+        loggedInUser: result,
          eventList: eventList
         }
         );
@@ -42,6 +43,11 @@ router.post('/', async (req, res) => {
     }
   });
 
+  router.get('/logout', async (req, res) => {
+    req.session.destroy();
+    // res.status(200).json('user logged out')
+    res.redirect('/')
+  })
   router.post('/login', async (req, res) => {
     let usersResponse = req.body;
     if (!usersResponse.email) {
@@ -55,15 +61,23 @@ router.post('/', async (req, res) => {
     }
   
     try {
+      // let eventList = await eventsData.getAll();
+      //   const result = await usersData.checkLogin( usersResponse['email'], usersResponse['password']
+      // );
+      // console.log(result._id)
+      // res.render('home', {
+      //   data: result,
+      //   eventList: eventList
+      // });
+        const result = await usersData.checkLogin( usersResponse['email'], usersResponse['password']);
       let eventList = await eventsData.getAll();
-        const result = await usersData.checkLogin( usersResponse['email'], usersResponse['password']
-      );
-      console.log(result._id)
-      res.render('home', {
-        data: result,
-        eventList: eventList
-      });
+      console.log(`user logged in ${result.email}`)
+      req.session.user = result
+      // res.render('home', {data: result});
+      //   res.render('home', {loggedInUser: result, eventList: eventList, isSearch: true})
+      res.redirect('/')
     } catch (e) {
+      console.log(e.message)
       res.status(400).render('login', {
         error: e,
         hasErrors: true,
