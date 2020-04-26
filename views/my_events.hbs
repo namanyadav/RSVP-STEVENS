@@ -1,5 +1,5 @@
 {{>navbar}}
-<main>
+<main style="padding-top: 60px">
     <div class="w3-container medi-yellow">
 <!--        <h4>My Events</h4>-->
     </div>
@@ -14,10 +14,13 @@
                     <h3>Bootstrap Sidebar</h3>
                 </div>-->
 
+
                 <ul class="list-unstyled components">
 <!--                    <p>Dummy Heading</p>-->
-                    <li class="active">
-                        <a href="#homeSubmenu">
+
+                        cond true
+                    <li class="{{#unless pageName}} active {{/unless}} {{#ifEquals pageName 'upcoming'}} active {{/ifEquals}}">
+                        <a href="/events/mine?pageName=upcoming">
                             Upcoming Events
                         </a>
                         <!--<ul class="collapse list-unstyled" id="homeSubmenu">
@@ -32,8 +35,8 @@
                             </li>
                         </ul>-->
                     </li>
-                    <li>
-                        <a href="#">
+                    <li class="{{#ifEquals pageName 'created'}} active {{/ifEquals}}">
+                        <a href="/events/mine?pageName=created">
                             Created by me
                         </a>
                     </li>
@@ -266,41 +269,7 @@
     /*input[name="search"]:focus {
         !*width: 100%;*!
     }*/
-    input[name="search"]:focus {
-        width: 330px;
-        background-color: #fff;
-        border-color: #66CC75;
 
-        -webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
-        -moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
-        box-shadow: 0 0 5px rgba(109,207,246,.5);
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out !important;
-    }
-    input[name="search"] {
-        /*background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;*/
-        border: solid 1px #ccc;
-        padding: 9px 10px 9px 32px;
-        width: 55px;
-
-        -webkit-border-radius: 10em;
-        -moz-border-radius: 10em;
-        border-radius: 10em;
-
-        -webkit-transition: all .5s;
-        -moz-transition: all .5s;
-        transition: all .5s;
-    }
-    input[name="search"] {
-        -webkit-appearance: textfield;
-        -webkit-box-sizing: content-box;
-        font-family: inherit;
-        font-size: 100%;
-    }
-    input::-webkit-search-decoration,
-    input::-webkit-search-cancel-button {
-        display: none;
-    }
 </style>
 <link rel="stylesheet" href="/stylesheets/mdcss.css">
 <link rel="stylesheet" href="/stylesheets/sidebar.css">

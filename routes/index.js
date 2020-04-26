@@ -32,9 +32,7 @@ const constructorMethod = (app) => {
 		// let artsEventList = await eventsData.getEventsOfCategory(eventsData.cats.artsnculture);
 		// let sportsEventList = await eventsData.getEventsOfCategory(eventsData.cats.sportsnwellness);
 		let catEventList = await eventsData.getEventsOfCategories([eventsData.cats.music, eventsData.cats.artsnculture]);
-
-		res.render('home', {eventList: eventList, isSearch: true, loggedInUser: user})
-
+		res.render('home', {eventList: eventList, isSearch: true, loggedInUser: user, catLabels: eventsData.cat_labels})
 		// res.render('home', {eventList: eventList, catEventList: catEventList, foodEventList: foodEventList, artsEventList: artsEventList, sportsEventList: sportsEventList})
 	});
 	app.get('/search', async (req, res) => {
@@ -51,6 +49,13 @@ const constructorMethod = (app) => {
 		// res.json(eventList);
 		res.render('partials/home_event_panel', {eventList: eventList, isSearch:true})
 	});
+
+	app.get('/search/events', async (req, res) =>{
+		let squery = req.query.squery;
+		let event = await eventsData.searchEvents(squery)
+		console.log(event)
+		res.json(event)
+	})
 
 	app.get('/details', async (req, res) => {
 		//console.log(req.body.title)

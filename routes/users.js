@@ -75,7 +75,8 @@ router.post('/', async (req, res) => {
       req.session.user = result
       // res.render('home', {data: result});
       //   res.render('home', {loggedInUser: result, eventList: eventList, isSearch: true})
-      res.redirect('/')
+      let redirectTo = req.session.redirectTo ? req.session.redirectTo : '/'
+      res.redirect(redirectTo)
     } catch (e) {
       console.log(e.message)
       res.status(400).render('login', {

@@ -7,15 +7,18 @@ const middlewares = require('middy/middlewares')
 const chromium = require('chrome-aws-lambda')
 
 /* new event page */
-router.get('/new', function(req, res, next) {
-  res.render('multipart_form', {user: 'naman', layout: 'layouts/main'})
+router.get('/new', loggedIn, function(req, res, next) {
+  let user = req.session.user;
+  res.render('multipart_form', {layout: 'layouts/main', loggedInUser: user})
   // res.send('all events in system');
 });
 
 /* view user events */
-router.get('/mine', async function(req, res, next) {
+router.get('/mine', loggedIn, async function(req, res, next) {
   let eventList = await eventData.getAll();
-  res.render('my_events', {user: 'naman', layout: 'layouts/main', eventList: eventList})
+  let user = req.session.user;
+  let page = req.query.pageName;
+  res.render('my_events', {loggedInUser: user, layout: 'layouts/main', eventList: eventList, pageName: page})
   // res.send('all events in system');
 });
 
@@ -31,8 +34,19 @@ router.get('/:id', async function(req, res, next) {
   res.json(event);
 });
 
+function loggedIn(req, res, next) {
+  if (req.session.user) {
+    next();     //If session exists, proceed to page
+  } else {
+    var err = new Error("Not logged in!");
+    console.log(req.session.user);
+    //  next(err);  //Error, trying to access unauthorized page!
+    req.session.redirectTo = req.originalUrl;
+    res.redirect("/login");
+  }
+}
 /* create event */
-router.post('/create', async function(req, res, next) {
+router.post('/create', loggedIn, async function(req, res, next) {
   let organizer = 'professor'
   let eventJson = {
     organizer: organizer,
