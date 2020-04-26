@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark primary-color" id="navbar" style="background-color: #343a40!important;">
+<nav class="navbar navbar-expand-lg navbar-dark primary-color fixed-top" id="navbar" style="background-color: #343a40!important;">
 
     <!-- Navbar brand -->
-    <a class="navbar-brand" href="#">RSVP Stevens</a>
+    <a class="navbar-brand" href="/">RSVP Stevens</a>
 
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -14,23 +14,26 @@
 
         <!-- Links -->
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active" onclick1="navtopage(this); return false;">
+            <!--<li class="nav-item active" onclick1="navtopage(this); return false;">
                 <a class="nav-link" href="/">Home
                     <span class="sr-only">(current)</span>
                 </a>
-            </li>
-            <li class="nav-item" onclick1="navtopage(this); return false;">
-                <a class="nav-link" href="#">My Events</a>
-            </li>
-            <li class="nav-item" onclick1="navtopage(this); return false;">
+            </li>-->
+            <!--{{#if loggedInUser}}
+                <li class="nav-item" onclick1="navtopage(this); return false;">
+                    <a class="nav-link" href="#">My Events</a>
+                </li>
+            {{/if}}-->
+
+            <!--<li class="nav-item" onclick1="navtopage(this); return false;">
                 <a class="nav-link" href="/events/new">Create</a>
-            </li>
-            <li class="nav-item">
+            </li>-->
+            <!--<li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="fa fa-search"></i>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li>-->
+            <!--<li class="nav-item">
                 <form class="form-inline">
                     <div class="md-form my-0">
                         <a class="nav-link" style="padding: 0">
@@ -38,19 +41,52 @@
                         </a>
                     </div>
                 </form>
-                <!--<a class="nav-link" href="#">
-                </a>-->
-            </li>
+            </li>-->
 
 
         </ul>
         <!-- Links -->
 
+        <form class="form-inline" action="#" onsubmit="alert('search clicked'); return false;">
+        <input type="text" name="search" placeholder="Search..">
+        </form>
+        <style type="text/css">
+            input[type=text] {
+                width: 130px;
+                box-sizing: border-box;
+                border: 2px solid #ccc;
+                border-radius: 25px;
+                font-size: 16px;
+                background-color: white;
+                /*background-image: url('/images/searchicon.png');*/
+                background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+                background-position: 10px 10px;
+                background-repeat: no-repeat;
+                padding: 8px 20px 8px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+            }
+
+            /* When the input field gets focus, change its width to 100% */
+            input[type=text]:focus {
+                width: 100%;
+            }
+
+        </style>
+
         <form class="form-inline">
             <div class="md-form my-0">
-                <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
+<!--                <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">-->
             </div>
         </form>
+
+
+
+        <a class="nav-link" href="/events/new">Create Event</a>
+    {{#if loggedInUser}}
+        <a class="nav-link" href="/events/mine">My Events</a>
+    {{/if}}
+
         <!--        <button type="button" class="btn btn-default" style="background-color: transparent !important; border: 1px solid whitesmoke">Login</button>-->
         {{#if loggedInUser}}
             <a href="/users/logout" class="btn btn-default" style="background-color: transparent !important; border: 1px solid whitesmoke">Logout</a>

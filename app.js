@@ -16,7 +16,7 @@ const eventsRouter = require('./routes/events');
 const app = express();
 
 // view engine setup
-hbs.registerHelper('ifEquals', function(arg1, arg2, options) { if (arg1 == arg2) {return options.fn(this)} return options.inverse(this); });
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) { console.log('proecessing helper'); if (arg1 == arg2) {console.log('returning true');return options.fn(this)} console.log('returning false');return options.inverse(this); });
 hbs.registerHelper('ifNotEquals', function(arg1, arg2, options) { if (arg1 != arg2) {return options.fn(this)} return options.inverse(this); });
 hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 hbs.registerPartial('partial_name', 'partial value');

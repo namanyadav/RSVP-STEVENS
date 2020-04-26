@@ -7,7 +7,17 @@ const cats = {
     music: 'music',
     foodndrinks: 'foodndrinks',
     artsnculture: 'artsnculture',
-    sportsnwellness: 'sportsnwellness'
+    sportsnwellness: 'sportsnwellness',
+    partiesnnightlife: 'partiesnnightlife',
+    networking: 'networking'
+}
+let cat_labels = {
+    music: 'Music',
+    artsnculture: 'Arts & Culture',
+    sportsnwellness: 'Sports & Wellness',
+    foodndrinks: 'Food & Drinks',
+    partiesnnightlife: 'Parties & Nightlife',
+    networking: 'Networking'
 }
 async function getEvent(id){
     if(id === undefined){
@@ -38,6 +48,7 @@ async function createEvent(eventJson){
         sDate: eventJson.sDate,
         eDate: eventJson.eDate,
         category: eventJson.category,
+        categoryLabel: cat_labels[eventJson.category],
         capacity: eventJson.capacity,
         isPaid: eventJson.pricing == 'paid',
         cost: eventJson.pricing == 'paid' ? eventJson.cost : 0,
@@ -180,6 +191,15 @@ async function update() {
     const updateinfo = await patientCollections.updateOne({ _id: id } , updatedata);
     return await this.getEvent(id);
 }
+async function searchEvents(squery) {
+    console.log(`search event with keywork ${squery}`);
+    const eventCollections = await events();
+    const eventCursor = await eventCollections.find({
+        $or:[{title:new RegExp(squery, 'i')}, {desc:new RegExp(squery, 'i')}, {category:new RegExp(squery, 'i')}]
+    })
+    let resultSet = eventCursor.toArray()
+    return resultSet
+}
 
 module.exports = {
     getEvent,
@@ -188,5 +208,7 @@ module.exports = {
     createEvent,
     getEventsOfCategory,
     getEventsOfCategories,
-    cats
+    cats,
+    cat_labels,
+    searchEvents
 };

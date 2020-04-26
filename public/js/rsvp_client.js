@@ -244,8 +244,9 @@ function removeValidationRuleDemo() {
 }
 function scrollToEvents() {
     if($('.home').length) {
+        // alert($("#home_page").offset().top)
         $('html, body').animate({
-            scrollTop: $("#navbar").offset().top
+            scrollTop: $("#home_page").offset().top-60
         }, 1000);
     }
 }
@@ -258,12 +259,18 @@ function removeFilter(el) {
     $(el).closest('.badge').remove();
     getFilteredResults();
 }
+function removeAllFilters() {
+    $(selected_filters).find('.badge').remove();
+    getFilteredResults();
+}
 let selected_filters = '#selected_filters';
 let cat_labels = {
     music: 'Music',
     artsnculture: 'Arts & Culture',
     sportsnwellness: 'Sports & Wellness',
-    foodndrinks: 'Food & Drinks'
+    foodndrinks: 'Food & Drinks',
+    partiesnnightlife: 'Parties & Nightlife',
+    networking: 'Networking'
 }
 function clearFilters() {
 
@@ -299,6 +306,7 @@ function addFilter(filter_name, filter_val) {
     if(filter_name == 'cat') {
         if(filter_val == 'all') {
             alert(`allfilters: ${getCurrentFilters().cat}`)
+            removeAllFilters();
         } else {
             if($.inArray(filter_val, getCurrentFilters().cat) == -1) {
                 // Retrieve the template data from the HTML (jQuery is used here).
@@ -369,17 +377,18 @@ $(document).ready(function () {
     }
 
     var navbar = document.getElementById("navbar");
+    var homepage = $('.container')[0];
     var filterbar = document.getElementById("filter-list")
     var eventpane = document.getElementById("filter-pane");
-    var sticky = navbar.offsetTop;
+    var sticky = homepage.offsetTop-60;
 
     function fixnavbar() {
         if (window.pageYOffset > sticky) {
-            navbar.classList.add("fixed-top")
+            // navbar.classList.add("fixed-top")
             filterbar.classList.add("fixed-top")
             eventpane.classList.add("offset-sm-3")
         } else {
-            navbar.classList.remove("fixed-top");
+        //     navbar.classList.remove("fixed-top");
             filterbar.classList.remove("fixed-top")
             eventpane.classList.remove("offset-sm-3")
         }
