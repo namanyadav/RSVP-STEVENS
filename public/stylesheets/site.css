@@ -639,6 +639,22 @@ input[name="search"] {
   -webkit-border-radius: 10em;
   -moz-border-radius: 10em;
   border-radius: 10em;
+
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  transition: all .5s;
+}
+input[name="search"] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  font-family: inherit;
+  font-size: 100%;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+  display: none;
+}
+
 #loading {
   width: 100%;
   height: 100%;
@@ -660,19 +676,4 @@ input[name="search"] {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   z-index: 100;
-}
-
-  -webkit-transition: all .5s;
-  -moz-transition: all .5s;
-  transition: all .5s;
-}
-input[name="search"] {
-  -webkit-appearance: textfield;
-  -webkit-box-sizing: content-box;
-  font-family: inherit;
-  font-size: 100%;
-}
-input::-webkit-search-decoration,
-input::-webkit-search-cancel-button {
-  display: none;
 }

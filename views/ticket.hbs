@@ -12,6 +12,8 @@
 </head>
 <body>
      <div> OrderId: 80939383836657</div>
+    <div id ="eventId" hidden>{{event._id}}</div>
+        <div id ="userId" hidden>{{ user._id}}</div>
     <div> Name: {{user.userName}}</div>
      <div id ="email" > Email: {{user.email}}</div>
         <div id="event" >Event Name: {{event.title}} </div>
@@ -26,9 +28,11 @@
 <script  type="text/javascript">
    function updateQRCode() {
     var email = document.getElementById("email");
+    var eventId = document.getElementById("eventId").value;
+      var userId = document.getElementById("userId").value;
     var eventName = document.getElementById("event");
     var element = document.getElementById("qrcode");
-    var text = email+":"+eventName;
+    var text = 'http://localhost:3000/details/ticket.pdf?id='+eventId+'&userId='+userId;
 
     var bodyElement = document.body;
     if(element.lastChild)
@@ -37,7 +41,7 @@
       element.appendChild(showQRCode(text));
 
   }
-  updateQRCode()
+ updateQRCode()
 </script>
 
 </body>

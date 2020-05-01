@@ -9,7 +9,7 @@ function create_new_event(el, e) {
         type: 'POST',
         data: $(el).serialize(),
         success: function (res) {
-            alert('succ')
+            alert('Event Created Successfully')
         },
         error: function (err) {
             alert('fail')
@@ -472,6 +472,13 @@ function functionPaymentAlert(cost) {
 
 function payment_form_validation() {
 var myForm = document.getElementById("AriaPay");
+var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+const todaysDate = new Date()
+const currentYear = todaysDate.getFullYear()
+const currentMonth = todaysDate.getMonth()+1
+
     if( myForm.cc_no.value == "" ) {
         alert( "Please enter card details!" );
         myForm.cc_no.focus() ;
@@ -482,9 +489,26 @@ var myForm = document.getElementById("AriaPay");
         myForm.cc_exp_mm.focus() ;
         return false;
      }
+  
+     if( myForm.cc_exp_mm.value == "" ) {
+        alert( "Please enter a expiry month!" );
+        myForm.cc_exp_mm.focus() ;
+        return false;
+     }
      if( myForm.cc_exp_yyyy.value == "" ) {
         alert( "Please enter expiry year!" );
         myForm.cc_exp_yyyy.focus() ;
+        return false;
+     }
+     if(myForm.cc_exp_yyyy.value < currentYear ){
+        alert( "Please enter a expiry date greater then current year !" );
+        myForm.cc_exp_yyyy.focus() ;
+        return false;
+     }
+   
+     if( myForm.cc_exp_mm.value <= currentMonth ){
+        alert( "Please enter a expiry date greater then current month!" );
+        myForm.cc_exp_mm.focus() ;
         return false;
      }
      if( myForm.cvv.value == "" ) {
