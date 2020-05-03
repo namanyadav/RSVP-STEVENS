@@ -1,0 +1,9 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Syncing ./ to s3://$WEBSITE_BUCKET"
+      - aws s3 sync "./" "s3://$WEBSITE_BUCKET"
+    finally:
+      - echo "Build phase completed `date`"
